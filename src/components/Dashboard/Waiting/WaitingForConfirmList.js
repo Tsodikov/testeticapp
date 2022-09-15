@@ -78,6 +78,7 @@ export const WaitingForConfirmList = ({ setShowTestCard, setShowConfirmList, set
 
     const goToExam = (e, testSession) => {
         e.preventDefault();
+        setShowExamResult(false);
         dispatch(setCurrentTestSession(testSession))
         dispatch(setActiveTest(testSession.test));
         setShowExam(true);

@@ -37,7 +37,7 @@ export const ChartResultExam = () => {
                 spentTime: timeInterval(item.startQuestion, item.endQuestion).time,
                 spentTimeUnit: timeInterval(item.startQuestion, item.endQuestion).unit,
                 question: item.question.questionText,
-                resultColor: item.result? "#a6c5ff" : "#ffb0b0",
+                resultColor: item.result? "green" : "red",
                 youAnswer: item.choiceAnswers[0].textAnswer,
                 // correctAnswer: item.
             };
@@ -52,18 +52,18 @@ export const ChartResultExam = () => {
             return (
                 <Card sx={{ minWidth: 275 }}>
                     <CardContent>
-                        <Typography sx={{ mb: 1.5, color: 'blue' }} component="div">
+                        <Typography sx={{ mb: 1.5 }} component="div">
                             {`Question ${label} : ${payload[0].payload.question}`}
                         </Typography>
-                        <Typography sx={{ mb: 1.5, color: 'blue' }} color="text.secondary">
+                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
                             {`You spent ${payload[0].payload.spentTime} ${payload[0].payload.spentTimeUnit} to answer`}
                         </Typography>
-                        <Typography sx={{ mb: 1.5, color: 'blue' }} color="text.secondary">
+                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
                             {`Your reply: ${payload[0].payload.youAnswer}`}
                         </Typography>
                         <Typography sx={{ mb: 1.5, 
                             color: `${payload[0].payload.resultColor}` }}>
-                            {payload[0].payload.resultColor === "#a6c5ff"? 'You gave the correct answer' : 'You gave the wrong answer'}
+                            {payload[0].payload.resultColor === "green"? 'You gave the correct answer' : 'You gave the wrong answer'}
                         </Typography>
                     </CardContent>
                 </Card>

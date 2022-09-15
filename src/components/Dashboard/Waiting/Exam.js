@@ -214,9 +214,9 @@ export const Exam = ({ setShowTestCard, setShowConfirmList, setShowExam }) => {
             <Stepper nonLinear={activeTest.backToAnyQuestion? true : false} activeStep={activeStep}>
                 {questionsList.map((item, index) => (
                 <Step key={item.id} completed={completed[index]}>
-                    <StepButton color="inherit" onClick={handleStep(index)}>
-                    {/* {item.titleOfQuestion} */}
-                    </StepButton>
+                    <StepButton color="inherit" 
+                    // onClick={handleStep(index)}
+                    />
                 </Step>
                 ))}
             </Stepper>

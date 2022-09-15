@@ -5,26 +5,44 @@ import { fetchQSbYTsId, questionSessionSelector } from "../../../store/questionS
 import { ChartResultExam } from "./ChartResultExam";
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
-export const ShowExamResult = ({ setShowExamResult }) => {
+export const ShowExamResult = ({ setShowExamResult, showExamResults }) => {
 
     const currentTestSession = useSelector(state => state.testSession.currentTestSession);
     const dispatch = useDispatch();
 
-    // const questionSessionList = useSelector(questionSessionSelector);
+    const questionSessionList = useSelector(questionSessionSelector);
     // console.log(currentTestSession, questionSessionList)
 
     const timeInterval = (date1, date2) => {
-        const t = Math.round((new Date(date2).getTime() - new Date(date1).getTime())/1000);
-        if (t < 60) {
-            return {time: t, unit: 'sec'};
-        } else if (t >= 60) {
-            return {time: t/60, unit: 'min'};
+        function padTo2Digits(num) {
+            return num.toString().padStart(2, '0');
         }
+        // const t = Math.round((new Date(date2).getTime() - new Date(date1).getTime())/1000);
+        const t = new Date((date2 - date1)*1000);
+        return `${padTo2Digits(t.getHours())} : ${padTo2Digits(t.getMinutes())} : ${padTo2Digits(t.getSeconds())}`
+
+        // let h, m;
+        // if (t/3600 < 1) { h = 0 }
+        // else if (t/3600 >= 1) { h = Math.round(t/3600) }; 
+        // if (t/60 < 1) { m = 0 }
+        // else if (t/60 >= 0) { m = Math.round(t/60) }
+        // if (t < 1) { m = 0 }
+        // else if (t >= 1) { m = Math.round(t/60) }
+        // return { hours: h, minute: m }
+        // if (t < 1) { m = 0 }
+        // else if (t >= 0) { m = Math.round(t/60) }
+        // if (t < 60) {
+        //     return {time: t, unit: 'sec'};
+        // } else if (t >= 60) {
+        //     return {time: t/60, unit: 'min'};
+        // }
     }
 
     useEffect(() => {
         dispatch(fetchQSbYTsId(currentTestSession.id));
     }, []);
+
+    if (!showExamResults) return null;   
 
     return (
         <Paper
@@ -46,24 +64,40 @@ export const ShowExamResult = ({ setShowExamResult }) => {
                 </Grid>
                 <Grid item xs={12} sm={2} lg={2}>
                     <Typography variant="subtitle1" gutterBottom>
+                        Start exam:
+                    </Typography>
+                    <Typography variant="subtitle1" gutterBottom>
+                        {currentTestSession.startTest.slice(0, 10)} {currentTestSession.startTest.slice(11, 16)}
+                    </Typography>
+                </Grid>
+                <Grid item xs={12} sm={2} lg={2}>
+                    <Typography variant="subtitle1" gutterBottom>
+                        Finish exam:
+                    </Typography>
+                    <Typography variant="subtitle1" gutterBottom>
+                        {currentTestSession.endTest.slice(0, 10)} {currentTestSession.endTest.slice(11, 16)}
+                    </Typography>
+                </Grid>
+                <Grid item xs={12} sm={2} lg={2}>
+                    <Typography variant="subtitle1" gutterBottom>
+                        Spent time: {timeInterval(currentTestSession.startTest, currentTestSession.endTest)}
+                    </Typography>
+                </Grid>
+                <Grid item xs={12} sm={2} lg={2}>
+                    <Typography variant="subtitle1" gutterBottom>
                         Qtn questions: {currentTestSession.test.qtnOfQuestion}
                     </Typography>
                 </Grid>
                 <Grid item xs={12} sm={2} lg={2}>
                     <Typography variant="subtitle1" gutterBottom>
-                        Right Questions: {currentTestSession.test.qtnOfQuestion}
+                        Right Questions: {questionSessionList.filter(item => item.result).length}
                     </Typography>
                 </Grid>
                 <Grid item xs={12} sm={2} lg={2}>
                     <Typography variant="subtitle1" gutterBottom>
-                        Wrong Questions: {currentTestSession.test.qtnOfQuestion}
+                        Wrong Questions: {questionSessionList.filter(item => !item.result).length}
                     </Typography>
-                </Grid>
-                <Grid item xs={12} sm={2} lg={2}>
-                    <Typography variant="subtitle1" gutterBottom>
-                        Spent time: {timeInterval(currentTestSession.startTest, currentTestSession.endTest).time}
-                    </Typography>
-                </Grid>
+                </Grid> 
             </Grid>
             <ChartResultExam />
         </Paper>

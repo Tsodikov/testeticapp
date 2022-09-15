@@ -124,6 +124,7 @@ export const testSessionSlice = createSlice({
         })
         .addCase(updateTestSession.fulfilled, (state, action) => {
             testSessionAdapter.updateOne(state, {id: action.payload.id, changes: action.payload});
+            state.currentTestSession = action.payload;
             state.testSessionLoadingStatus = 'loaded';
         })
         .addCase(updateTestSession.rejected, (state) => {

@@ -31,6 +31,7 @@ export const WaitingForConfirmWrraper = ({ display }) => {
                     <Grid item xs={12} md={12} lg={12}>
                         <ShowExamResult 
                             // setShowTestCard={setShowTestCard}
+                            showExamResults={showExamResults}
                             setShowExamResult={setShowExamResult}
                             setShowConfirmList={setShowConfirmList}
                             setShowExam={setShowExam} />
