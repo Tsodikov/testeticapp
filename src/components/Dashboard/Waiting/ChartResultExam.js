@@ -14,19 +14,22 @@ import {
   ResponsiveContainer,
   Cell,
 } from 'recharts';
+import { useTimeTransform } from '../../../hooks/timeTransform.hook';
 import { fetchQSbYTsId, questionSessionSelector } from '../../../store/questionSessionSlice';
 
-const timeInterval = (date1, date2) => {
-    const t = Math.round((new Date(date2).getTime() - new Date(date1).getTime())/1000);
-    if (t < 60) {
-        return {time: t, unit: 'sec'};
-    } else if (t >= 60) {
-        return {time: t/60, unit: 'min'};
-    }
-}
+// const timeInterval = (date1, date2) => {
+//     const t = Math.round((new Date(date2).getTime() - new Date(date1).getTime())/1000);
+//     if (t < 60) {
+//         return {time: t, unit: 'sec'};
+//     } else if (t >= 60) {
+//         return {time: t/60, unit: 'min'};
+//     }
+// }
+
 
 export const ChartResultExam = () => {
-
+    
+    const { timeInterval } = useTimeTransform();
     const questionSessionList = useSelector(questionSessionSelector);
 
     const createData = () => {
@@ -34,8 +37,8 @@ export const ChartResultExam = () => {
         const result = questionSessionList.map((item, i) => {
             return {
                 questionNumber: i + 1,
-                spentTime: timeInterval(item.startQuestion, item.endQuestion).time,
-                spentTimeUnit: timeInterval(item.startQuestion, item.endQuestion).unit,
+                spentTime: timeInterval(item.startQuestion, item.endQuestion),
+                // spentTimeUnit: timeInterval(item.startQuestion, item.endQuestion).unit,
                 question: item.question.questionText,
                 resultColor: item.result? "green" : "red",
                 youAnswer: item.choiceAnswers[0].textAnswer,
@@ -56,7 +59,7 @@ export const ChartResultExam = () => {
                             {`Question ${label} : ${payload[0].payload.question}`}
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                            {`You spent ${payload[0].payload.spentTime} ${payload[0].payload.spentTimeUnit} to answer`}
+                            {`You spent ${payload[0].payload.spentTime} to answer`}
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
                             {`Your reply: ${payload[0].payload.youAnswer}`}

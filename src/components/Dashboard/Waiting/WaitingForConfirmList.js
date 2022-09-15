@@ -205,7 +205,6 @@ export const WaitingForConfirmList = ({ setShowTestCard, setShowConfirmList, set
                         </TableCell>}
                         {item.status !== "Exam finished"? null :
                         <TableCell >
-                            {console.log(item.status)}
                             
                             <Tooltip title="Watch exam results">
                                 <IconButton onClick={(e) => showResult(e, item) }>

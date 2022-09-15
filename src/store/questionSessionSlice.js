@@ -100,7 +100,6 @@ export const questionSessionSelector = createSelector(
     state => state.questionSession,
     selectAll,
     questionSession => {
-        console.log(Object.values(questionSession.entities))
         return Object.values(questionSession.entities);
     }
 )
