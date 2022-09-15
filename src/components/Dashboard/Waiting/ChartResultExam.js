@@ -13,6 +13,7 @@ import {
   Legend,
   ResponsiveContainer,
   Cell,
+  Label,
 } from 'recharts';
 import { useTimeTransform } from '../../../hooks/timeTransform.hook';
 import { fetchQSbYTsId, questionSessionSelector } from '../../../store/questionSessionSlice';
@@ -37,8 +38,8 @@ export const ChartResultExam = () => {
         const result = questionSessionList.map((item, i) => {
             return {
                 questionNumber: i + 1,
-                spentTime: timeInterval(item.startQuestion, item.endQuestion),
-                // spentTimeUnit: timeInterval(item.startQuestion, item.endQuestion).unit,
+                spentTime: (new Date(item.endQuestion).getTime() - new Date(item.startQuestion).getTime())/1000,
+                spentTimeUnit: timeInterval(item.startQuestion, item.endQuestion),
                 question: item.question.questionText,
                 resultColor: item.result? "green" : "red",
                 youAnswer: item.choiceAnswers[0].textAnswer,
@@ -59,7 +60,7 @@ export const ChartResultExam = () => {
                             {`Question ${label} : ${payload[0].payload.question}`}
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                            {`You spent ${payload[0].payload.spentTime} to answer`}
+                            {`You spent ${payload[0].payload.spentTimeUnit} to answer`}
                         </Typography>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
                             {`Your reply: ${payload[0].payload.youAnswer}`}
@@ -92,11 +93,13 @@ export const ChartResultExam = () => {
                 }}
                 >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="questionNumber" />
-                <YAxis />
+                <XAxis dataKey="questionNumber">
+                    <Label value="question number" offset={0} position="insideBottom" />
+                </XAxis>
+                <YAxis label={{ value: 'spent time, sec', angle: -90, position: 'insideLeft' }}/>
                 <Tooltip content={renderTooltip} />
-                <Legend verticalAlign="top" wrapperStyle={{ lineHeight: '40px' }} />
-                <ReferenceLine y={0} stroke="#000" />
+                {/* <Legend verticalAlign="top" wrapperStyle={{ lineHeight: '40px' }} /> */}
+                <ReferenceLine y={1} stroke="#000" />
                 {/* <Brush dataKey="questionNumber" height={20} stroke="#8884d8" /> */}
                 <Bar dataKey="spentTime" barSize={5}>
                     {data.map((item, i) => {
