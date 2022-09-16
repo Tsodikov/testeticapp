@@ -63,8 +63,9 @@ export const fetchTestsByOrg = createAsyncThunk(
 export const fetchTestsByDep = createAsyncThunk(
     'tests/fetchTestsByDep',
     async (depId) => {
+        console.log(depId)
         const { request } = useHttp();
-        const result = await request(`https://testetic.herokuapp.com/tests/gettestbyorg/${depId}`);
+        const result = await request(`https://testetic.herokuapp.com/tests/getbydep/${depId}`);
         if (!result) return [];
         return result;
 });
@@ -120,7 +121,7 @@ export const testSlice = createSlice({
             testAdapter.addOne(state, action.payload);
         },
         allTestRemove: (state, action) => {
-            testAdapter.removeAll();
+            testAdapter.removeAll(state);
         },
         testUpdate: (state, action) => {
             testAdapter.setOne(state, action.payload);
@@ -165,6 +166,7 @@ export const testSlice = createSlice({
         })
         .addCase(fetchTestsByDep.fulfilled, (state, action) => {
             state.testsLoadingStatus = 'loaded';
+            console.log(action.payload)
             testAdapter.setAll(state, action.payload);
         })
         .addCase(fetchTestsByDep.rejected, (state) => {

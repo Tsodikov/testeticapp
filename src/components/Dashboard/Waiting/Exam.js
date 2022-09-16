@@ -186,19 +186,6 @@ export const Exam = ({ setShowTestCard, setShowConfirmList, setShowExam }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [startExam]);
 
-    // useEffect(() => {
-    //     if (questionsList.length !== 0 || allStepsCompleted()) {
-    //         let a = {}
-    //         questionsList[activeStep].answers.forEach(item => {
-    //             a = {
-    //                 ...a,
-    //                 [item.id]: false,
-    //             }
-    //         });
-    //         setCheckedAnswer(a);
-    //     }
-    // }, [activeStep])
-
     return (
     <Fragment>
         {!startExam && !finishExam ? <TestCard 
@@ -214,26 +201,15 @@ export const Exam = ({ setShowTestCard, setShowConfirmList, setShowExam }) => {
             <Stepper nonLinear={activeTest.backToAnyQuestion? true : false} activeStep={activeStep}>
                 {questionsList.map((item, index) => (
                 <Step key={item.id} completed={completed[index]}>
-                    <StepButton color="inherit" 
-                    // onClick={handleStep(index)}
-                    />
+                    <StepButton color="inherit" />
                 </Step>
                 ))}
             </Stepper>
-        <div>
+        {/* <div> */}
             {allStepsCompleted() ?  (
                 <ExamFinishCard 
                     setShowConfirmList={setShowConfirmList}
                     setShowExam={setShowExam}/>
-            // <Fragment>
-            //     <Typography sx={{ mt: 2, mb: 1 }}>
-            //     All questions completed - you&apos;re finished
-            //     </Typography>
-            //     <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            //     <Box sx={{ flex: '1 1 auto' }} />
-            //     <Button onClick={handleReset}>Reset</Button>
-            //     </Box>
-            // </Fragment>
             ) : (
             <Fragment>
                 <Grid container spacing={3}>
@@ -329,7 +305,7 @@ export const Exam = ({ setShowTestCard, setShowConfirmList, setShowExam }) => {
                 </Box>
             </Fragment>
             )}
-        </div>
+        {/* </div> */}
         </Box>
     }   
     </Fragment>

@@ -32,7 +32,7 @@ export default function AddTest({editMode, setEditMode, showAddTest, setShowAddT
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(editingTest.startAnyTime)
+        console.log(currentUser.departmentId)
         let newTest = {
             title: tempTitle,
             description: tempDescription,

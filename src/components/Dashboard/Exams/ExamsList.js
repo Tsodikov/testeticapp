@@ -2,7 +2,7 @@ import { Button, Grid, IconButton, Paper, Table, TableBody, TableCell, TableCont
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getByUserId, setCurrentTestSession, testSessionSelector } from "../../../store/testSessionSlice";
-import { fetchTestsByDep, setActiveTest, testsSelector } from "../../../store/testsSlice";
+import { allTestRemove, fetchTestsByDep, setActiveTest, testsSelector } from "../../../store/testsSlice";
 import { ExamsFilter } from "./ExamsFilter";
 import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
 import FinalDialog from "./FinalDialog";
@@ -76,14 +76,21 @@ export const ExamsList = ({selectedTest, setSelectedTest, setShowTestCard}) => {
     useEffect(() => {
         if (filteredOrganization && filteredDepartment) {
             dispatch(fetchTestsByDep(filteredDepartment.id));
+        } else {
+            dispatch(allTestRemove());
         }
-    }, [filteredOrganization, filteredDepartment, confirm]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        // filteredOrganization, 
+        filteredDepartment, confirm]);
 
     useEffect(() => {
         if (examsList) {
             dispatch(getByUserId({userId: currentUser.id, status: 'all'}));
             setFilteredExamsList(examsList.filter(item => !isRegister(testSessionList, item.id)));
         }
+        console.log(currentUser.id, examsList)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [examsList]);
 
     return (
