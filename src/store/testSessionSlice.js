@@ -5,8 +5,8 @@ const testSessionAdapter = createEntityAdapter();
 
 const clearTestSession = {
     id: null,                   
-    testModelId: '',          
-    userModelId: '',          
+    testId: '',          
+    userId: '',          
     registrationDateTime: '', 
     confirmationRegister: '', 
     invitationSended: '',     

@@ -21,6 +21,7 @@ export default function FinalDialog({ test, openFinalDialog, setConfirm, setOpen
 
     const handleConfirm = () => {
         setOpenFinalDialog(false);
+        console.log(test)
         const newTestSession = {
             testId: test.id,          
             userId: currentUser.id,          

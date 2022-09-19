@@ -15,6 +15,7 @@ import { TestCard } from '../Exams/TestCard';
 import { updateTestSession } from '../../../store/testSessionSlice';
 import { createQuestionSession } from '../../../store/questionSessionSlice';
 import ExamFinishCard from './ExamFinichCard';
+import { updateTest } from '../../../store/testsSlice';
 
 export const Exam = ({ setShowTestCard, setShowConfirmList, setShowExam }) => {
 
@@ -179,8 +180,17 @@ export const Exam = ({ setShowTestCard, setShowConfirmList, setShowExam }) => {
                 testSession: {
                     ...currentTestSession, 
                     endTest: new Date(),
+                    // qtnUsers: currentTestSession.qtnUsers + 1,
                     status: 'Exam finished'
                 }
+            }));
+            console.log(activeTest)
+            dispatch(updateTest({
+                newTest: {
+                    ...activeTest,
+                    qtnUsers: activeTest.qtnUsers + 1,
+                },
+                testId: activeTest.id,
             }));
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps

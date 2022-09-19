@@ -9,10 +9,11 @@ import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Grid, IconButton, Paper, TableContainer, Typography } from '@mui/material';
-import { clearEditingTest, deleteTest, fetchTestsByOrg, setActiveTest, setEditingTest, testsSelector } from '../../../store/testsSlice';
+import { clearEditingTest, deleteTest, fetchTestsByDep, setActiveTest, setEditingTest, testsSelector } from '../../../store/testsSlice';
 import { setTempMediaFileArray } from '../../../store/mediaFilesSlice';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import { updateChapter } from '../../../store/chapterSlice';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
 
 const columns = [
     { id: 'test', 
@@ -30,6 +31,11 @@ const columns = [
       minWidth: 80,
       format: (value) => value.toLocaleString('en-US'),
     },
+    { id: 'passed', 
+      label: "Passed", 
+      minWidth: 20,
+      format: (value) => value.toLocaleString('en-US'),
+    },
     { id: 'qtnquestion', 
       label: "Questions", 
       minWidth: 20,
@@ -37,12 +43,12 @@ const columns = [
     },
     { id: 'created', 
       label: "Created", 
-      minWidth: 120,
+      minWidth: 110,
       format: (value) => value.toLocaleString('en-US'),
     },
     { id: 'creator', 
       label: "Creator", 
-      minWidth: 50,
+      minWidth: 20,
       format: (value) => value.toLocaleString('en-US'),
     },
     { id: 'edit', 
@@ -71,7 +77,7 @@ export default function TestsList({
     editMode, setEditMode, 
 }) {
 
-    const currentOrganization = useSelector(state => state.organization.currentOrganization);
+    const currentUser = useSelector(state => state.users.currentUser);
     const testsList = useSelector(testsSelector);
     const dispatch = useDispatch();
 
@@ -96,6 +102,12 @@ export default function TestsList({
         switchMode('modeQuestionTable');
     }
 
+    const onStatDisplay = (e, test) => {
+        e.preventDefault();
+        dispatch(setActiveTest(test));
+        switchMode('modeTestStatistic');
+    }
+
     const onSelectTest = (e, test) => {
         e.preventDefault();
         setSelectedTest(test.id);
@@ -109,7 +121,7 @@ export default function TestsList({
     };
 
     React.useEffect(() => {
-        dispatch(fetchTestsByOrg(currentOrganization.id));
+        dispatch(fetchTestsByDep(currentUser.departmentId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -179,21 +191,32 @@ export default function TestsList({
                             onClick={(e) => onSelectTest(e, test)}
                             key={columns[3].id} 
                             align={columns[3].align}>
+                            {test.qtnUsers}
+                        </TableCell>
+                        <TableCell
+                            onClick={(e) => onSelectTest(e, test)}
+                            key={columns[4].id} 
+                            align={columns[4].align}>
                             {test.qtnOfQuestion}
                         </TableCell>
                         <TableCell 
-                            key={columns[4].id}
+                            key={columns[5].id}
                             onClick={(e) => onSelectTest(e, test)}
-                            align={columns[4].align}>
+                            align={columns[5].align}>
                             {test.dateOfCreate.slice(0, 10)}
                         </TableCell>
                         <TableCell 
-                            key={columns[5].id} 
+                            key={columns[6].id} 
                             onClick={(e) => onSelectTest(e, test)}
-                            align={columns[5].align}>
+                            align={columns[6].align}>
                             {test.testCreator.creatorName}
                         </TableCell>
-                        
+                        <TableCell >
+                            {!test.readyToUse? null :
+                            <IconButton onClick={(e) => onStatDisplay(e, test) }>
+                                <QueryStatsIcon fontSize='small'/>
+                            </IconButton>}
+                        </TableCell>
                         <TableCell >
                             <IconButton onClick={(e) => onEdit(e, test) }>
                                 <BorderColorOutlinedIcon fontSize='small'/>

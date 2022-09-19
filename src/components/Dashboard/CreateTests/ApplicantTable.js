@@ -100,22 +100,23 @@ export default function ApplicantTable({ selectedTest, selectedUser, setSelected
       sx={{ p: 2, width: '100%', overflow: 'hidden' }}
       elevation={6}>
       <Grid container spacing={1}>
-        <Grid item xs={12} sm={6} lg={6}>
+        <Grid item xs={12} sm={8} lg={8}>
           <Typography variant="subtitle" sx={{color: "blue"}}>
             {`Application to exam: ${activeTest.title}`}
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={6} lg={6}>
+        <Grid item xs={12} sm={4} lg={4}>
           <ToggleButtonGroup
             value={mode}
             onChange={handleMode}
             exclusive
-            fullWidth
+            // fullWidth
             aria-label="change mode"
           >
-            <ToggleButton value="all" size="small" color="info" sx={{border: "none"}} aria-label="all">All partisipant</ToggleButton>
-            <ToggleButton value="registering" size="small" color="info" sx={{border: "none"}} aria-label="registering">Waiting for registration</ToggleButton>
-            <ToggleButton value="registered" size="small" color="info" sx={{border: "none"}} aria-label="registered">Take part in exam</ToggleButton> 
+            <ToggleButton value="all" size="small" color="info" sx={{border: "none"}} aria-label="all">All</ToggleButton>
+            <ToggleButton value="registering" size="small" color="info" sx={{border: "none"}} aria-label="registering">Waiting list</ToggleButton>
+            <ToggleButton value="registered" size="small" color="info" sx={{border: "none"}} aria-label="registered">Participants</ToggleButton>
+            <ToggleButton value="Exam finished" size="small" color="info" sx={{border: "none"}} aria-label="registered">Passed</ToggleButton> 
           </ToggleButtonGroup>
         </Grid>
       </Grid>

@@ -1,7 +1,6 @@
 import { Grid } from "@mui/material"
 import { Container } from "@mui/system"
 import React from "react"
-import { TestCard } from "../Exams/TestCard"
 import { AddAnswer } from "./AddAnswer"
 import { AddQuestion } from "./AddQuestion"
 import AddTest from "./AddTest"
@@ -11,6 +10,7 @@ import { MediaFilesList } from "./MediaFilesList"
 import { QuestionTable } from "./QuestionTable"
 import { StudentInfo } from "./StudentInfo"
 import TestsList from "./TestsList"
+import { TestStatistic } from "./TestStatistic"
 
 export const TestsWrraper = ({display}) => {
 
@@ -18,7 +18,6 @@ export const TestsWrraper = ({display}) => {
         switch (mode) {
             case 'modeAddTest':
                 if (!showAddTest) setShowAddTest(true);
-                // if (showCardTest) setShowCardTest(false);
                 if (showAddQuestion) setShowAddQuestion(false);
                 if (showQuestionTable) setShowQuestionTable(false);
                 if (showAnswerTable) setShowAnswerTable(false);
@@ -26,17 +25,9 @@ export const TestsWrraper = ({display}) => {
                 if (showMediaFiles) setShowMediaFiles(false);
                 if (showApplicantTable) setShowApplicantTable(false);
                 if (showStudentInfo) setShowStudentInfo(false);
+                if (showTestStatistic) setShowTestStatistic(false);
                 break;
-            // case 'modeCardTest':
-            //     if (showAddTest) setShowAddTest(false);
-            //     if (!showCardTest) setShowCardTest(true);
-            //     if (showAddQuestion) setShowAddQuestion(false);
-            //     if (showQuestionTable) setShowQuestionTable(false);
-            //     if (showAnswerTable) setShowAnswerTable(false);
-            //     if (showAddAnswer) setShowAddAnswer(false);
-            //     if (showMediaFiles) setShowMediaFiles(false);
-            //     if (showApplicantTable) setShowApplicantTable(false);
-            //     break;
+            
             case 'modeAddQuestion':
                 if (showAddTest) setShowAddTest(false);
                 if (!showAddQuestion) setShowAddQuestion(true);
@@ -46,10 +37,10 @@ export const TestsWrraper = ({display}) => {
                 if (showMediaFiles) setShowMediaFiles(false);
                 if (showApplicantTable) setShowApplicantTable(false);
                 if (showStudentInfo) setShowStudentInfo(false);
+                if (showTestStatistic) setShowTestStatistic(false);
                 break;
             case 'modeQuestionTable':
                 if (showAddTest) setShowAddTest(false);
-                // if (showCardTest) setShowCardTest(false);
                 if (showAddQuestion) setShowAddQuestion(false);
                 if (!showQuestionTable) setShowQuestionTable(true);
                 if (showAnswerTable) setShowAnswerTable(false);
@@ -57,10 +48,10 @@ export const TestsWrraper = ({display}) => {
                 if (showMediaFiles) setShowMediaFiles(false);
                 if (showApplicantTable) setShowApplicantTable(false);
                 if (showStudentInfo) setShowStudentInfo(false);
+                if (showTestStatistic) setShowTestStatistic(false);
                 break;
             case 'modeAnswerTable':
                 if (showAddTest) setShowAddTest(false);
-                // if (showCardTest) setShowCardTest(false);
                 if (showAddQuestion) setShowAddQuestion(false);
                 if (showQuestionTable) setShowQuestionTable(false);
                 if (!showAnswerTable) setShowAnswerTable(true);
@@ -68,10 +59,10 @@ export const TestsWrraper = ({display}) => {
                 if (showMediaFiles) setShowMediaFiles(false);
                 if (showApplicantTable) setShowApplicantTable(false);
                 if (showStudentInfo) setShowStudentInfo(false);
+                if (showTestStatistic) setShowTestStatistic(false);
                 break;
             case 'modeAddAnswer':
                 if (showAddTest) setShowAddTest(false);
-                // if (showCardTest) setShowCardTest(false);
                 if (showAddQuestion) setShowAddQuestion(false);
                 if (showQuestionTable) setShowQuestionTable(false);
                 if (showAnswerTable) setShowAnswerTable(false);
@@ -79,10 +70,10 @@ export const TestsWrraper = ({display}) => {
                 if (showMediaFiles) setShowMediaFiles(false);
                 if (showApplicantTable) setShowApplicantTable(false);
                 if (showStudentInfo) setShowStudentInfo(false);
+                if (showTestStatistic) setShowTestStatistic(false);
                 break;
             case 'modeMediaFiles':
                 if (showAddTest) setShowAddTest(false);
-                // if (showCardTest) setShowCardTest(false);
                 if (showAddQuestion) setShowAddQuestion(false);
                 if (showQuestionTable) setShowQuestionTable(false);
                 if (showAnswerTable) setShowAnswerTable(false);
@@ -90,10 +81,10 @@ export const TestsWrraper = ({display}) => {
                 if (!showMediaFiles) setShowMediaFiles(true);
                 if (showApplicantTable) setShowApplicantTable(false);
                 if (showStudentInfo) setShowStudentInfo(false);
+                if (showTestStatistic) setShowTestStatistic(false);
                 break;
             case 'modeApplicantTable':
                 if (showAddTest) setShowAddTest(false);
-                // if (showCardTest) setShowCardTest(false);
                 if (showAddQuestion) setShowAddQuestion(false);
                 if (showQuestionTable) setShowQuestionTable(false);
                 if (showAnswerTable) setShowAnswerTable(false);
@@ -101,6 +92,7 @@ export const TestsWrraper = ({display}) => {
                 if (!showMediaFiles) setShowMediaFiles(false);
                 if (!showApplicantTable) setShowApplicantTable(true);
                 if (showStudentInfo) setShowStudentInfo(false);
+                if (showTestStatistic) setShowTestStatistic(false);
                 break;
             case 'modeStudentInfo':
                 if (showAddTest) setShowAddTest(false);
@@ -111,6 +103,18 @@ export const TestsWrraper = ({display}) => {
                 if (!showMediaFiles) setShowMediaFiles(false);
                 if (!showApplicantTable) setShowApplicantTable(true);
                 if (!showStudentInfo) setShowStudentInfo(true);
+                if (showTestStatistic) setShowTestStatistic(false);
+                break;
+            case 'modeTestStatistic':
+                if (showAddTest) setShowAddTest(false);
+                if (showAddQuestion) setShowAddQuestion(false);
+                if (showQuestionTable) setShowQuestionTable(false);
+                if (showAnswerTable) setShowAnswerTable(false);
+                if (showAddAnswer) setShowAddAnswer(false);
+                if (showMediaFiles) setShowMediaFiles(false);
+                if (showApplicantTable) setShowApplicantTable(false);
+                if (showStudentInfo) setShowStudentInfo(false);
+                if (!showTestStatistic) setShowTestStatistic(true);
                 break;
             default:
                 break;
@@ -128,6 +132,7 @@ export const TestsWrraper = ({display}) => {
     const [showAddAnswer, setShowAddAnswer] = React.useState(false);
     const [showMediaFiles, setShowMediaFiles] = React.useState(false);
     const [showApplicantTable, setShowApplicantTable] = React.useState(false);
+    const [showTestStatistic, setShowTestStatistic] = React.useState(false);
 
     if (display === 'none') return null;
     return (
@@ -153,7 +158,7 @@ export const TestsWrraper = ({display}) => {
                     </Grid>}
 
                     {!showApplicantTable? null : 
-                    <Grid item xs={12} md={8} lg={8}>
+                    <Grid item xs={12} md={12} lg={12}>
                         <ApplicantTable 
                             selectedTest={selectedTest}
                             selectedUser={selectedUser}
@@ -193,6 +198,14 @@ export const TestsWrraper = ({display}) => {
                             setShowMediaFiles={setShowMediaFiles}
                         />
                     </Grid>}
+
+                    {!showTestStatistic? null : 
+                    <Grid item xs={12} md={12} lg={12}>
+                        <TestStatistic
+                            setShowTestStatistic={setShowTestStatistic}
+                        />
+                    </Grid>}
+
                     </Grid>
                     <Grid container spacing={2} >
                     <Grid item xs={12} md={12} lg={12}></Grid>
