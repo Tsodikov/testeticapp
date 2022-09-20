@@ -9,7 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { usersSelector } from '../../../store/usersSlice';
 import { Button, Grid, IconButton, Paper, Stack, TableContainer, TablePagination, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import ApprovalIcon from '@mui/icons-material/Approval';
-import { getByTestId, testSessionSelector, testSessionUpdate, updateTestSession } from '../../../store/testSessionSlice';
+import { getByTestId, setCurrentTestSession, testSessionSelector, testSessionUpdate, updateTestSession } from '../../../store/testSessionSlice';
+import { fetchQSbYTsId } from '../../../store/questionSessionSlice';
 
 const columns = [
     { id: 'student', 
@@ -48,6 +49,7 @@ export default function ApplicantTable({ selectedTest, selectedUser, setSelected
   
   const testSessionList = useSelector(testSessionSelector);
   const activeTest = useSelector(state => state.tests.activeTest);
+  // const currentTestSession = useSelector(state => state.testSession.currentTestSession);
   const dispatch = useDispatch();
 
   const handleMode = (event, newModes) => {
@@ -57,6 +59,8 @@ export default function ApplicantTable({ selectedTest, selectedUser, setSelected
   const handleSelect = (e, testSession) => {
     e.preventDefault();
     setSelectedUser(testSession);
+    dispatch(setCurrentTestSession(testSession));
+    // dispatch(fetchQSbYTsId(currentTestSession.id));
     switchMode('modeStudentInfo');
   };
 
@@ -90,7 +94,7 @@ export default function ApplicantTable({ selectedTest, selectedUser, setSelected
         sx={{ p: 2, width: '100%', overflow: 'hidden' }}
         elevation={6}>
         <Typography variant="h6" sx={{color: "blue"}}>
-          Application to exam: Nobody registered to this test
+          Exam participants: Nobody registered to this test
         </Typography>
     </Paper>
     );
@@ -102,7 +106,7 @@ export default function ApplicantTable({ selectedTest, selectedUser, setSelected
       <Grid container spacing={1}>
         <Grid item xs={12} sm={8} lg={8}>
           <Typography variant="subtitle" sx={{color: "blue"}}>
-            {`Application to exam: ${activeTest.title}`}
+            {`Participants of exam ${activeTest.title}`}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={4} lg={4}>
@@ -141,11 +145,9 @@ export default function ApplicantTable({ selectedTest, selectedUser, setSelected
             testSessionList
             .filter(item => mode !== 'all'? item.status === mode : item)
             .map((testSession) => (
-              
               <TableRow 
                 key={testSession.id}
                 name={testSession.id}
-                // hover role="checkbox" 
                 tabIndex={-1}
                 selected={selectedUser.id === testSession.id}
                 // onClick={(e) => handleSelect(testSession)}

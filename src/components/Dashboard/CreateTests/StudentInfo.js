@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { Avatar, Grid, Paper, Typography } from "@mui/material"
+import { Avatar, Grid, IconButton, Paper, Typography } from "@mui/material"
+import { ChartResultExam } from '../Waiting/ChartResultExam';
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchQSbYTsId } from '../../../store/questionSessionSlice';
 
 function stringToColor(string) {
     let hash = 0;
@@ -30,31 +34,48 @@ function stringToColor(string) {
     };
   }
 
-export const StudentInfo = ({selectedUser}) => {
+export const StudentInfo = ({selectedUser, setShowStudentInfo }) => {
+
+  const dispatch = useDispatch();
+  const currentTestSession = useSelector(state => state.testSession.currentTestSession);
+
+  React.useEffect(() => {
+    dispatch(fetchQSbYTsId(currentTestSession.id));
+  }, [currentTestSession])
 
     if (!selectedUser.id) {
         return null;
     }
     return (
         <Paper
-            sx={{ p: 2, width: '100%', overflow: 'hidden' }}
-            elevation={6}
-        >
+        sx={{ p: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            height: 520, }}
+        elevation={6}>
             <Grid container spacing={3}>
-                <Grid item xs={2} sm={2} lg={2}>
+                <Grid item xs={2} sm={1} lg={1}>
                     <Avatar {...stringAvatar(`${selectedUser.user.firstName} ${selectedUser.user.lastName}`)} />
                 </Grid>
-                <Grid item xs={10} sm={10} lg={10}>
+                <Grid item xs={12} sm={10} lg={10}>
                     <Typography noWrap variant="h6">
                         {selectedUser.user.firstName} {selectedUser.user.lastName}
                     </Typography>
-                </Grid>
-                <Grid item xs={12} sm={12} lg={12}>
                     <Typography noWrap variant="subtitle2">
                        email: {selectedUser.user.email}
                     </Typography>
                 </Grid>
+                <Grid item xs={2} sm={1} lg={1}>
+                    <IconButton onClick={() => setShowStudentInfo(false) }>
+                        <ClearOutlinedIcon fontSize='small'/>
+                    </IconButton>
+                </Grid>
+                {/* <Grid item xs={12} sm={12} lg={12}> */}
+                    
+                {/* </Grid> */}
             </Grid>
+            <ChartResultExam />
+            
         </Paper>
     )
 }

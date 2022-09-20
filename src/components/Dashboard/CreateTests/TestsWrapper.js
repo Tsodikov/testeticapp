@@ -167,10 +167,11 @@ export const TestsWrraper = ({display}) => {
                     </Grid>}
 
                     {!showStudentInfo? null : 
-                    <Grid item xs={12} md={4} lg={4}>
+                    <Grid item xs={12} md={12} lg={12}>
                         <StudentInfo 
                             selectedUser={selectedUser}
-                            setSelectedUser={setSelectedUser}/>
+                            setSelectedUser={setSelectedUser}
+                            setShowStudentInfo={setShowStudentInfo}/>
                     </Grid>}
 
                     {!showAddQuestion? null : 

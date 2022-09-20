@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   BarChart,
   Bar,
-  Brush,
   ReferenceLine,
   XAxis,
   YAxis,
@@ -16,16 +15,7 @@ import {
   Label,
 } from 'recharts';
 import { useTimeTransform } from '../../../hooks/timeTransform.hook';
-import { fetchQSbYTsId, questionSessionSelector } from '../../../store/questionSessionSlice';
-
-// const timeInterval = (date1, date2) => {
-//     const t = Math.round((new Date(date2).getTime() - new Date(date1).getTime())/1000);
-//     if (t < 60) {
-//         return {time: t, unit: 'sec'};
-//     } else if (t >= 60) {
-//         return {time: t/60, unit: 'min'};
-//     }
-// }
+import { questionSessionSelector } from '../../../store/questionSessionSlice';
 
 
 export const ChartResultExam = () => {
@@ -34,7 +24,6 @@ export const ChartResultExam = () => {
     const questionSessionList = useSelector(questionSessionSelector);
 
     const createData = () => {
-        // const result =[];
         const result = questionSessionList.map((item, i) => {
             return {
                 questionNumber: i + 1,
@@ -50,6 +39,7 @@ export const ChartResultExam = () => {
     }
 
     const data = createData();
+    console.log(data);
 
     const renderTooltip = ({ active, payload, label }) => {
         if (active && payload && payload.length) {
@@ -74,10 +64,6 @@ export const ChartResultExam = () => {
             )
         }
     }
-
-    // useEffect(() => {
-    //     dispatch(fetchQSbYTsId(currentTestSession.id));
-    // }, []);
 
     return (
         <ResponsiveContainer width="100%" height="100%">

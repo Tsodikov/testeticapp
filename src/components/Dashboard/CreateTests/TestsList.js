@@ -8,8 +8,8 @@ import Title from '../Title';
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Grid, IconButton, Paper, TableContainer, Typography } from '@mui/material';
-import { clearEditingTest, deleteTest, fetchTestsByDep, setActiveTest, setEditingTest, testsSelector } from '../../../store/testsSlice';
+import { Button, Grid, IconButton, Paper, TableContainer, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import { clearEditingTest, deleteTest, fetchTestsByDep, fetchTestsByOrg, setActiveTest, setEditingTest, testsSelector } from '../../../store/testsSlice';
 import { setTempMediaFileArray } from '../../../store/mediaFilesSlice';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import { updateChapter } from '../../../store/chapterSlice';
@@ -76,10 +76,24 @@ export default function TestsList({
     selectedTest, setSelectedTest, 
     editMode, setEditMode, 
 }) {
-
+    const [mode, setMode] = React.useState('mytests');
     const currentUser = useSelector(state => state.users.currentUser);
     const testsList = useSelector(testsSelector);
     const dispatch = useDispatch();
+
+    const showList = (mode) => {
+        switch (mode) {
+            case 'mytests':
+                return testsList.filter(item => item.testCreator.id === currentUser.id);
+            case 'mydeparttests':
+                return testsList.filter(item => item.department.departmentId === currentUser.departmentId);
+            case 'alltests':
+                return testsList.filter(item => item);
+        
+            default:
+                break;
+        }
+    }
 
     const onCreateTest = (e) => {
         if (editMode) setEditMode(false);
@@ -121,7 +135,7 @@ export default function TestsList({
     };
 
     React.useEffect(() => {
-        dispatch(fetchTestsByDep(currentUser.departmentId));
+        dispatch(fetchTestsByOrg(currentUser.organization[0].id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -133,6 +147,20 @@ export default function TestsList({
         <Grid container spacing={3}>
             <Grid item xs={12} sm={10} lg={10}>
                 <Title>Tests list</Title>
+            </Grid>
+            <Grid item xs={12} sm={4} lg={4}>
+                <ToggleButtonGroup
+                    value={mode}
+                    onChange={(e) => setMode(e.target.value)}
+                    exclusive
+                    // fullWidth
+                    aria-label="change mode"
+                >
+                    <ToggleButton value="mytests" size="small" color="info" sx={{border: "none"}} aria-label="mytests">My tests</ToggleButton>
+                    <ToggleButton value="mydeparttests" size="small" color="info" sx={{border: "none"}} aria-label="mydeparttests">My department tests</ToggleButton>
+                    <ToggleButton value="alltests" size="small" color="info" sx={{border: "none"}} aria-label="alltests">All</ToggleButton>
+                    {/* <ToggleButton value="Exam finished" size="small" color="info" sx={{border: "none"}} aria-label="registered">Passed</ToggleButton>  */}
+                </ToggleButtonGroup>
             </Grid>
             <Grid item xs={2} sm={2} lg={2}>
                 <Button
@@ -159,8 +187,9 @@ export default function TestsList({
                 </TableRow>
             </TableHead>
             <TableBody>
-                {!testsList? null :
-                testsList
+                {console.log(showList(mode))}
+                {!showList(mode)? null :
+                showList(mode)
                 .map((test) => (
                     <TableRow 
                     key={test.id}
