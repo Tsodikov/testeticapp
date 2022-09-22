@@ -8,7 +8,6 @@ import CachedIcon from '@mui/icons-material/Cached';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import { setActiveTest } from "../../../store/testsSlice";
 import PreviewOutlinedIcon from '@mui/icons-material/PreviewOutlined';
-import { fetchQSbYTsId } from "../../../store/questionSessionSlice";
 
 const columns = [
     { id: 'Exam', 

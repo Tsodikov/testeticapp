@@ -2,9 +2,7 @@ import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOrgByChapter } from '../../../store/organizationSlice';
 import { getByUserTestId } from '../../../store/testSessionSlice';
-import { getTestById } from '../../../store/testsSlice';
 import FinalDialog from './FinalDialog';
 import { RegistrationDialog } from './RegistrationDialog';
 

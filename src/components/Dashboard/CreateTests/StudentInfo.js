@@ -41,6 +41,7 @@ export const StudentInfo = ({selectedUser, setShowStudentInfo }) => {
 
   React.useEffect(() => {
     dispatch(fetchQSbYTsId(currentTestSession.id));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTestSession])
 
     if (!selectedUser.id) {

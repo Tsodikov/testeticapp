@@ -138,6 +138,7 @@ export default function RegistrationStepper() {
     }
 
     const onSubmitOrg = (values, { setSubmitting }) => {
+        // dispatch(setEditingOrganization(values));
         dispatch(addOrganization(values)) 
         setSubmitting(false);
         handleComplete();
@@ -399,6 +400,9 @@ export default function RegistrationStepper() {
                         </Row>
                         <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                             <Box sx={{ flex: '1 1 auto' }} />
+                                <Button onClick={handleNext} sx={{ mr: 1 }}>
+                                    Next
+                                </Button>
                             {activeStep !== steps.length &&
                                 (completed[activeStep] ? (
                                 <Typography variant="caption" sx={{ display: 'inline-block' }}>

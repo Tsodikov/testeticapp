@@ -62,14 +62,14 @@ export const Exam = ({ setShowTestCard, setShowConfirmList, setShowExam }) => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleStep = (step) => () => {
-        setActiveStep(step);
-    };
+    // const handleStep = (step) => () => {
+    //     setActiveStep(step);
+    // };
 
-    const handleReset = () => {
-        setActiveStep(0);
-        setCompleted({});
-    };
+    // const handleReset = () => {
+    //     setActiveStep(0);
+    //     setCompleted({});
+    // };
 
     const StyledFormControlLabel = styled((props) => <FormControlLabel {...props} />)(
         ({ theme, checked }) => ({

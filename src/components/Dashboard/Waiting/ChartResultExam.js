@@ -1,6 +1,6 @@
 import { Card, CardContent, Typography } from '@mui/material';
-import React, { PureComponent, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+// import React, { PureComponent, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import {
   BarChart,
   Bar,
@@ -9,7 +9,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
   Cell,
   Label,

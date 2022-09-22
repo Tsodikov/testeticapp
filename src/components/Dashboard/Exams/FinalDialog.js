@@ -7,12 +7,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCurrentTestSession, createTestSession } from '../../../store/testSessionSlice';
-import { setCurrentUser } from '../../../store/usersSlice';
-
 export default function FinalDialog({ test, openFinalDialog, setConfirm, setOpenFinalDialog }) {
 
     const dispatch = useDispatch();
-    const activeTest = useSelector(state => state.tests.activeTest);
     const currentUser = useSelector(state => state.users.currentUser);
 
     const handleClose = () => {

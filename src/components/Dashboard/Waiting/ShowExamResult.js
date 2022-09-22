@@ -16,6 +16,7 @@ export const ShowExamResult = ({ setShowExamResult, showExamResults }) => {
 
     useEffect(() => {
         dispatch(fetchQSbYTsId(currentTestSession.id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentTestSession]);
 
     if (!showExamResults) return null;   

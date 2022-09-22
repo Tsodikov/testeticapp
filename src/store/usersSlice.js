@@ -121,6 +121,11 @@ export const usersSlice = createSlice({
                 avatar: action.payload.userData.avatar,
                 jwt: `Bearer ${action.payload.jwt}`,
             };
+            // localStorage.setItem('user', JSON.stringify({
+            //     email: action.payload.userData.email,
+            //     password: action.payload.userData.password,
+            //     jwt: `Bearer ${action.payload.jwt}`,
+            // }));
         })
         .addCase(login.rejected, (state) => {
             state.usersLoadingStatus = 'error';

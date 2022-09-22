@@ -9,7 +9,7 @@ import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, FormControlLabel, Grid, IconButton, Paper, Switch, TableContainer, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
-import { clearActiveTest, clearEditingTest, deleteTest, fetchTestsByDep, fetchTestsByOrg, setActiveTest, setEditingTest, testsSelector } from '../../../store/testsSlice';
+import { clearEditingTest, deleteTest, fetchTestsByOrg, setActiveTest, setEditingTest, testsSelector } from '../../../store/testsSlice';
 import { setTempMediaFileArray } from '../../../store/mediaFilesSlice';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import { updateChapter } from '../../../store/chapterSlice';

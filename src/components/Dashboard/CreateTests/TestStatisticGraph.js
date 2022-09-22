@@ -1,21 +1,21 @@
 import { Card, CardContent, Typography } from "@mui/material";
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis, Legend, Tooltip, Area, ComposedChart, Scatter } from "recharts";
+import { Bar, CartesianGrid, ResponsiveContainer, XAxis, YAxis, Legend, Tooltip, Area, ComposedChart, Scatter } from "recharts";
 
 export const TestStatisticGraph = ({ data }) => {
 
-    const renderLegend = (props) => {
-        const { payload } = props;
+    // const renderLegend = (props) => {
+    //     const { payload } = props;
       
-        return (
-          <ul>
-            {
-              payload.map((entry, index) => (
-                <li key={`item-${index}`}>{entry.value}</li>
-              ))
-            }
-          </ul>
-        );
-      }
+    //     return (
+    //       <ul>
+    //         {
+    //           payload.map((entry, index) => (
+    //             <li key={`item-${index}`}>{entry.value}</li>
+    //           ))
+    //         }
+    //       </ul>
+    //     );
+    //   }
 
     const renderColorfulLegendText = (value, entry) => {
         const { color } = entry;

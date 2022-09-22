@@ -27,8 +27,9 @@ import { TestsWrraper } from './CreateTests/TestsWrapper';
 import { DepartmentsWrraper } from './Departments/DepartmentsWrraper'
 import { ExamsWrraper } from './Exams/ExamsWrraper';
 import { WaitingForConfirmWrraper } from './Waiting/WaitingForConfirmWrraper';
-import { Exam } from './Waiting/Exam';
-import { fetchOrganization, setCurrentOrganization } from '../../store/organizationSlice';
+import { setCurrentOrganization } from '../../store/organizationSlice';
+import { useNavigate } from 'react-router';
+import { clearCurrentUser } from '../../store/usersSlice';
 
 const drawerWidth = 240;
 
@@ -119,6 +120,7 @@ function DashboardContent({ dashboardOwner }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const openMenu = Boolean(anchorEl);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleClickMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -127,6 +129,12 @@ function DashboardContent({ dashboardOwner }) {
   const handleCloseMenu = () => {
     setAnchorEl(null);
   };
+
+  const handleLogOut = () => {
+    localStorage.removeItem('user');
+    dispatch(clearCurrentUser());
+    navigate('/login');
+  }
 
   useEffect(() => {
     // if (currentUser) {
@@ -204,7 +212,7 @@ function DashboardContent({ dashboardOwner }) {
                 <ListItemText>Profile</ListItemText>
               </MenuItem>
               <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
-              <MenuItem onClick={handleCloseMenu}>Logout</MenuItem>
+              <MenuItem onClick={handleLogOut}>Logout</MenuItem>
             </Menu>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">

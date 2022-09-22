@@ -8,7 +8,7 @@ import Title from '../Title';
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Grid, IconButton, Paper, TableContainer, TablePagination, Typography } from '@mui/material';
+import { Button, Grid, IconButton, Paper, TableContainer, TablePagination } from '@mui/material';
 import { chaptersSelector, delChapter, fetchChapters, setActiveChapter } from '../../../store/chapterSlice';
 
 const columns = [

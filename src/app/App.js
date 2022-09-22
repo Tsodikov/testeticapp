@@ -10,9 +10,30 @@ import { CreatorDachboardPage } from '../Pages/CreatorDachboardPage.js';
 import { TestPage } from '../Pages/TestPage.js';
 import { SignInPage } from '../Pages/SignInPage.js';
 import { UserDashboardPage } from '../Pages/UserDashboardPage.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../store/usersSlice.js';
+import { useEffect } from 'react';
+import { setCurrentOrganization } from '../store/organizationSlice.js';
 
 
 function App() {
+  const dispatch = useDispatch();
+  const usersLoadingStatus = useSelector(state => state.users.usersLoadingStatus);
+  const currentUser = useSelector(state => state.users.currentUser);
+
+  useEffect(() => {
+    if (localStorage.getItem('user')) {
+      dispatch(login(JSON.parse(localStorage.getItem('user'))));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (usersLoadingStatus === 'loaded') {
+      dispatch(setCurrentOrganization(currentUser.organization[0]));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser]);
   
   return (
     <BrowserRouter>

@@ -48,6 +48,14 @@ export function SignIn() {
       email: data.get('email'),
       password: data.get('password'),
     }
+    if (data.get('remember')) {
+      localStorage.setItem('user', JSON.stringify({
+        email: userData.email,
+        password: userData.password,
+      }));
+    }
+    console.log(JSON.parse(localStorage.getItem('user')))
+    
     dispatch(login(userData));
   };
 
@@ -69,15 +77,17 @@ export function SignIn() {
         default:
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [usersLoadingStatus, success])
+  // dispatch(fetchUsersToOrg(1));
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [usersLoadingStatus, success]);
+
+  
   if (success) {
     return null;
   }
 
   return (
-    
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -120,7 +130,7 @@ export function SignIn() {
               autoComplete="current-password"
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value="remember" name="remember" color="primary" />}
               label="Remember me"
             />
             <Button
