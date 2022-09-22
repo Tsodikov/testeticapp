@@ -3,10 +3,8 @@ import { useHttp } from "../hooks/http.hook";
 
 const organizationAdapter = createEntityAdapter();
 
-const initialState = organizationAdapter.getInitialState({
-    organizationLoadingStatus: 'idle',
-    currentOrganization: {
-        id: '',
+const clearOrganization = {
+    id: '',
         name: '',
         category: '',
         description: '',
@@ -21,7 +19,12 @@ const initialState = organizationAdapter.getInitialState({
         backgroundImage: '',
         terms: false,
         specialUsers: [],
-    }
+}
+
+const initialState = organizationAdapter.getInitialState({
+    organizationLoadingStatus: 'idle',
+    currentOrganization: clearOrganization,
+    editingOrganization: clearOrganization,
 });
 
 export const fetchOrganization = createAsyncThunk(
@@ -65,6 +68,9 @@ export const organizationSlice = createSlice({
     reducers: {
         setCurrentOrganization: (state, action) => {
             state.currentOrganization = action.payload;
+        },
+        setEditingOrganization: (state, action) => {
+            state.editingOrganization = action.payload;
         },
         // setCurrentUrlFs: (state, action) => {
         //     state.currentUrlFs = action.payload;
@@ -167,4 +173,5 @@ export default reducer;
 
 export const {
     setCurrentOrganization,
+    setEditingOrganization,
 } = actions

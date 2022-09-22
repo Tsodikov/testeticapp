@@ -55,7 +55,11 @@ const validationSchemaForUser = Yup.object().shape({
     password: Yup.string().required()
 });
 
-const steps = ['Create you Organization', 'Create administrator user', 'Castomize you page'];
+const steps = [
+    'Create you Organization',
+    'Create administrator user',
+    // 'Castomize you page'
+            ];
 
 export default function RegistrationStepper() {
 
@@ -88,6 +92,7 @@ export default function RegistrationStepper() {
         ? // It's the last step, but not all steps have been completed,
           // find the first step that has been completed
           steps.findIndex((step, i) => !(i in completed))
+
         : activeStep + 1;
     setActiveStep(newActiveStep);
   };
