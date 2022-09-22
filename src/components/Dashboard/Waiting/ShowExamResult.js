@@ -13,11 +13,10 @@ export const ShowExamResult = ({ setShowExamResult, showExamResults }) => {
     const { timeInterval } = useTimeTransform();
 
     const questionSessionList = useSelector(questionSessionSelector);
-    // console.log(currentTestSession, questionSessionList)
 
     useEffect(() => {
         dispatch(fetchQSbYTsId(currentTestSession.id));
-    }, []);
+    }, [currentTestSession]);
 
     if (!showExamResults) return null;   
 

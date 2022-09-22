@@ -68,7 +68,6 @@ export const ExamsList = ({selectedTest, setSelectedTest, setShowTestCard}) => {
         testSessionList.forEach(item => {
             if (item.testId === testId) tempArr.push(item.testId);
         });
-        console.log(tempArr)
         if (tempArr.length === 0) return false;
         else return true;
     }
@@ -87,9 +86,8 @@ export const ExamsList = ({selectedTest, setSelectedTest, setShowTestCard}) => {
     useEffect(() => {
         if (examsList) {
             dispatch(getByUserId({userId: currentUser.id, status: 'all'}));
-            setFilteredExamsList(examsList.filter(item => !isRegister(testSessionList, item.id)));
+            setFilteredExamsList(examsList.filter(item => !isRegister(testSessionList, item.id) && item.readyToUse));
         }
-        console.log(currentUser.id, examsList)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [examsList]);
 

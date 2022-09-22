@@ -146,6 +146,7 @@ export const TestsWrraper = ({display}) => {
                             setSelectedTest={setSelectedTest}
                             editMode={editMode}
                             setEditMode={setEditMode}
+                            setShowAddTest={setShowAddTest}
                         />
                     </Grid>
                     {!showAddTest? null : 

@@ -1,16 +1,17 @@
-import { Grid, IconButton, Paper, Typography } from "@mui/material"
-import { useDispatch, useSelector } from "react-redux";
+import { CircularProgress, Grid, IconButton, Paper, Typography } from "@mui/material"
+import { useSelector } from "react-redux";
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import { useEffect } from "react";
-import { getByTestId, testSessionSelector } from "../../../store/testSessionSlice";
+import { testSessionSelector } from "../../../store/testSessionSlice";
 import { useTimeTransform } from "../../../hooks/timeTransform.hook";
 import { useState } from "react";
 import { TestStatisticGraph } from "./TestStatisticGraph";
+import { Box } from "@mui/system";
 
 export const TestStatistic = ({ setShowTestStatistic }) => {
 
     const activeTest = useSelector(state => state.tests.activeTest);
-    const dispatch = useDispatch();
+    const testSessionLoadingStatus =useSelector(state => state.testSession.testSessionLoadingStatus);
     const testSession = useSelector(testSessionSelector);
     const { averageTime } = useTimeTransform();
     const [data, setData] = useState();
@@ -27,7 +28,7 @@ export const TestStatistic = ({ setShowTestStatistic }) => {
     const chartData = () =>  {
         let questionIdArr = activeTest.questions.map(item => item.id);
         let allQuestionSessions = [];
-        const data = [];
+        let data = [];
         questionIdArr.forEach(questId => {
             testSession.filter(item => item.status === 'Exam finished').forEach(item => {
                 allQuestionSessions.push(
@@ -41,6 +42,7 @@ export const TestStatistic = ({ setShowTestStatistic }) => {
             allQuestionSessions = [];
         });
         const dataFinal = [];
+        if (data[0].questionSessions.length !== 0) {
         data.forEach((item, i) => {
             dataFinal.push({
                 questNumber: i + 1,
@@ -57,26 +59,25 @@ export const TestStatistic = ({ setShowTestStatistic }) => {
                 resultRight: item.questionSessions.filter(qs => qs.result).length,
                 resultWrong: item.questionSessions.filter(qs => !qs.result).length
             });
-        });
+        });}
+        data = [];
         setData(dataFinal);
-        // console.log(dataFinal)
-        // return dataFinal;
     }
 
     useEffect(() => {
-        dispatch(getByTestId(activeTest.id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [activeTest]);
-
-    useEffect(() => {
-        chartData();
+        if (testSessionLoadingStatus === 'loaded') {
+            chartData();
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [testSession]);
 
-    
-    // setData(chartData());
-    // const data = chartData();
-
+    if (testSessionLoadingStatus !== 'loaded') 
+    return (
+        <Box sx={{width: "100%", margin: "auto" }}>
+            <CircularProgress />
+        </Box>
+    );
+    // chartData();
     return (
         <Paper
         sx={{ p: 2,

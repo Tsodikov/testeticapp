@@ -4,10 +4,11 @@ import { useState, Fragment } from 'react';
 import { WaitingForConfirmList } from './WaitingForConfirmList';
 import { Exam } from './Exam';
 import { ShowExamResult } from './ShowExamResult';
+import { TestCard } from '../Exams/TestCard';
 
 export const WaitingForConfirmWrraper = ({ display }) => {
 
-    // const [showTestCard, setShowTestCard] = useState(false);
+    const [showTestCard, setShowTestCard] = useState(false);
     const [showExam, setShowExam] = useState(false);
     const [showConfirmList, setShowConfirmList] = useState(true);
     const [showExamResults, setShowExamResult] = useState(false);
@@ -20,7 +21,7 @@ export const WaitingForConfirmWrraper = ({ display }) => {
                     {!showConfirmList? null :
                     <Grid item xs={12} md={12} lg={12}>
                         <WaitingForConfirmList 
-                            // setShowTestCard={setShowTestCard} 
+                            setShowTestCard={setShowTestCard} 
                             setShowExam={setShowExam}
                             setShowConfirmList={setShowConfirmList}
                             setShowExamResult={setShowExamResult}
@@ -30,7 +31,7 @@ export const WaitingForConfirmWrraper = ({ display }) => {
                     {!showExamResults? null :
                     <Grid item xs={12} md={12} lg={12}>
                         <ShowExamResult 
-                            // setShowTestCard={setShowTestCard}
+                            setShowTestCard={setShowTestCard}
                             showExamResults={showExamResults}
                             setShowExamResult={setShowExamResult}
                             setShowConfirmList={setShowConfirmList}
@@ -39,11 +40,21 @@ export const WaitingForConfirmWrraper = ({ display }) => {
                     {!showExam? null : 
                     <Grid item xs={12} md={12} lg={12}>
                         <Exam 
-                            // setShowTestCard={setShowTestCard}
+                            setShowTestCard={setShowTestCard}
                             setShowConfirmList={setShowConfirmList}
                             setShowExam={setShowExam}
                             setShowExamResult={setShowExamResult} />
                     </Grid>}
+                    {!showTestCard? null :
+                    <Grid item xs={12} md={12} lg={12}>
+                        <TestCard 
+                            setShowTestCard={setShowTestCard}
+                            showExamResults={showExamResults}
+                            setShowExamResult={setShowExamResult}
+                            setShowConfirmList={setShowConfirmList}
+                            setShowExam={setShowExam} />
+                    </Grid>}
+                    
                 </Grid>
             </Container>
         </Fragment>

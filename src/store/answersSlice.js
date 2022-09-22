@@ -41,7 +41,6 @@ export const updateAnswer = createAsyncThunk(
     'answers/updateAnswer',
     async ({newAnswer, id}) => {
         const { request } = useHttp();
-        // console.log(answer)
         const result = await request(`https://testetic.herokuapp.com/answers/update/${id}`, 'PATCH', JSON.stringify(newAnswer))
         if (!result) return [];
         return result;
@@ -105,7 +104,6 @@ export const answersSlice = createSlice({
         .addCase(addAnswers.fulfilled, (state, action) => {
             state.answersLoadingStatus = 'loaded';
             // state.activeAnswerId = action.payload.id;
-            console.log(action.payload)
             answersAdapter.addOne(state, action.payload);
         })
         .addCase(addAnswers.rejected, (state) => {

@@ -15,7 +15,6 @@ export const ShowMediaFile = ({mode, file, url, setFiles}) => {
     };
 
     // const onDelete = (id) => {
-    //     console.log(id)
     //     dispatch(delMediaFromFileServer(currentUrlFs));
     //     dispatch(setCurrentUrlFs(''));
     //     if (mode === file) {

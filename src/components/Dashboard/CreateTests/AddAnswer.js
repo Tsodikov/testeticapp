@@ -88,7 +88,6 @@ export const AddAnswer = ({ editMode, setEditMode, setShowAddAnswer }) => {
                         }
                     </Grid>
                     <Grid item xs={4} sm={2} lg={2}>
-                        {console.log(answersList.filter(item => item.answerRight === true).length)}
                         <FormControlLabel control={<Checkbox
                             // disabled={activeQuestion.id? false : true}
                             checked={editingAnswer.answerRight}

@@ -2,7 +2,7 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import { Autocomplete, Button, FormControlLabel, Input, InputAdornment, Paper, Switch } from '@mui/material';
+import { Autocomplete, Button, FormControlLabel, IconButton, Input, InputAdornment, Paper, Switch } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -11,6 +11,7 @@ import { chaptersSelector, fetchChapters, listChapterForListing, updateChapter }
 import { addTest, clearActiveTest, clearEditingTest, setEditingTest, updateTest } from '../../../store/testsSlice';
 import { addMediaToFileServer, clearTempMediaFileArray } from '../../../store/mediaFilesSlice'
 import { FileTypeSelector } from '../../MediaFiles/ShowMediaFile';
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 
 export default function AddTest({editMode, setEditMode, showAddTest, setShowAddTest, ...props}) {
 
@@ -32,7 +33,6 @@ export default function AddTest({editMode, setEditMode, showAddTest, setShowAddT
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(currentUser.departmentId)
         let newTest = {
             title: tempTitle,
             description: tempDescription,
@@ -93,10 +93,18 @@ export default function AddTest({editMode, setEditMode, showAddTest, setShowAddT
             sx={{ p: 2, width: '100%', overflow: 'hidden' }}
             elevation={6}
             >
-                <Typography variant="h6" gutterBottom>
-                    {editMode? 'Edit test' : 'Add test' }
-                </Typography>
+                
                 <Grid container component="form" onSubmit={(e) => handleSubmit(e)} spacing={3}>
+                    <Grid item xs={2} sm={11} lg={11}>
+                        <Typography variant="h6" gutterBottom>
+                            {editMode? 'Edit test' : 'Add test' }
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={2} sm={1} lg={1}>
+                        <IconButton onClick={() => setShowAddTest(false) }>
+                            <ClearOutlinedIcon fontSize='small'/>
+                        </IconButton>
+                    </Grid>
                     <Grid item xs={12} sm={8} lg={8}>
                         <TextField
                             id="title"

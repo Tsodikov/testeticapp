@@ -46,7 +46,6 @@ export const delMediaFromFileServer = createAsyncThunk(
     async (url) => {
         const { request } = useHttp();
         const { createDelUrl } = useStringOperation();
-        console.log(createDelUrl(url));
         return await request(createDelUrl(url), 'DELETE');
 });
 
@@ -95,7 +94,6 @@ export const mediaFilesSlice = createSlice({
         .addCase(delMediaFromFileServer.fulfilled, (state, action) => {
             state.fileServerLoadingStatus = 'loaded';
             // state.resultDeleting = action.payload;
-            console.log(action.payload);
             // mediaFilesAdapter.removeOne(state, action.payload);
         })
         .addCase(delMediaFromFileServer.rejected, (state) => {

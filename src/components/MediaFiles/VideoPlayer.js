@@ -6,13 +6,8 @@ export default class VideoPlayer extends Component {
       super(props, context);
       this.src = props.src;
     }
-  
-    // componentDidMount() {
-    //   this.player.subscribeToStateChange(this.handleStateChange.bind(this));
-    // }
 
     render() {
-        console.log('asdkjfa skdjfjadsf kasdjfajsdf ksadfj kasdjf asdjf')
         return (
             <Player
                 ref={player => {

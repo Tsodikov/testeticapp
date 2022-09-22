@@ -23,15 +23,22 @@ const clearTest = {
     showResultTest: true,              
     organization: {
         organizationId: null,
+        organizationTitle: '',
     },
     department: {
-        departmentId: null,       
-    },        
+        departmentId: null,
+        departmentTitle: '',    
+    },
+    testCreator: {
+		id: null,
+		creatorName: '',
+	},      
     chapter: {
         chapterId: null,
         chapterTitle: '',
         qtnTests: null,
-    }
+    },
+    questions: [],
 }
 
 const testAdapter = createEntityAdapter();

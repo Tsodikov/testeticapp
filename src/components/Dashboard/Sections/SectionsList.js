@@ -59,7 +59,6 @@ export default function SectionsList({ selectedChapter, setSelectedChapter, edit
 
     const onEdit =(event, chapter) => {
         event.preventDefault();
-        console.log(editMode)
         setEditMode(true);
         dispatch(setActiveChapter(chapter));
         setShowAddSection(!showAddSection);

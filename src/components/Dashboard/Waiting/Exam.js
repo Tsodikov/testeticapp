@@ -162,7 +162,6 @@ export const Exam = ({ setShowTestCard, setShowConfirmList, setShowExam }) => {
     }, []);
 
     useEffect(() => {
-        console.log(startExam)
         if (startExam) {
             dispatch(updateTestSession({
                 id: currentTestSession.id, 
@@ -184,7 +183,6 @@ export const Exam = ({ setShowTestCard, setShowConfirmList, setShowExam }) => {
                     status: 'Exam finished'
                 }
             }));
-            console.log(activeTest)
             dispatch(updateTest({
                 newTest: {
                     ...activeTest,

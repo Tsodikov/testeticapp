@@ -4,13 +4,11 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Title from '../Title';
 import { useDispatch, useSelector } from 'react-redux';
-import { usersSelector } from '../../../store/usersSlice';
-import { Button, Grid, IconButton, Paper, Stack, TableContainer, TablePagination, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import { Grid, IconButton, Paper, TableContainer, ToggleButton, ToggleButtonGroup, Tooltip, Typography } from '@mui/material';
 import ApprovalIcon from '@mui/icons-material/Approval';
-import { getByTestId, setCurrentTestSession, testSessionSelector, testSessionUpdate, updateTestSession } from '../../../store/testSessionSlice';
-import { fetchQSbYTsId } from '../../../store/questionSessionSlice';
+import { getByTestId, setCurrentTestSession, testSessionSelector, updateTestSession } from '../../../store/testSessionSlice';
+import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 
 const columns = [
     { id: 'student', 
@@ -41,6 +39,12 @@ const columns = [
       minWidth: 24,
       format: (value) => value.toLocaleString('en-US'),
     },
+    { id: 'action1', 
+      label: "", 
+      align: 'right',
+      minWidth: 24,
+      format: (value) => value.toLocaleString('en-US'),
+    },
 ];
 
 export default function ApplicantTable({ selectedTest, selectedUser, setSelectedUser, switchMode }) {
@@ -66,17 +70,17 @@ export default function ApplicantTable({ selectedTest, selectedUser, setSelected
 
   const handleApprove = (testSession) => {
 
-    dispatch(testSessionUpdate({
-      id: testSession.id,
-      changes: {
-        status: 'registered',
-        confirmationRegister: new Date(),
-      }
-    }));
-
     dispatch(updateTestSession({id: testSession.id, testSession: {
       ...testSession,
       status: 'registered',
+      confirmationRegister: new Date(),
+    }}));
+  }
+
+  const handleCancel = (testSession) => {
+    dispatch(updateTestSession({id: testSession.id, testSession: {
+      ...testSession,
+      status: 'registercancel',
       confirmationRegister: new Date(),
     }}));
   }
@@ -127,7 +131,6 @@ export default function ApplicantTable({ selectedTest, selectedUser, setSelected
       
       <TableContainer sx={{ maxHeight: 280 }}>
         <Table size="small" stickyHeader aria-label="sticky table">
-          <Grid item xs={12} sm={12} lg={12}></Grid>
           <TableHead>
             <TableRow>
               {columns.map(column => (
@@ -150,6 +153,7 @@ export default function ApplicantTable({ selectedTest, selectedUser, setSelected
                 name={testSession.id}
                 tabIndex={-1}
                 selected={selectedUser.id === testSession.id}
+                // onClick={(e) => dropDownMenu(e, testSession)}
                 // onClick={(e) => handleSelect(testSession)}
                 >
                   <TableCell key={columns[0].id} align={columns[0].align} onClick={(e) => handleSelect(e, testSession)}>
@@ -161,12 +165,21 @@ export default function ApplicantTable({ selectedTest, selectedUser, setSelected
                   </TableCell>
                   <TableCell key={columns[3].id} align={columns[3].align} onClick={(e) => handleSelect(e, testSession)}>
                     {testSession.status}</TableCell>
-                  {testSession.status === 'registering'?
+                  {testSession.status === 'registering'? <>
                   <TableCell key={columns[4].id} align={columns[4].align} width={columns[4].minWidth}>
-                    <IconButton onClick={() => handleApprove(testSession) }>
-                        <ApprovalIcon fontSize='small'/>
-                    </IconButton>
+                    <Tooltip title="Підтвердити реєстрацію">
+                      <IconButton onClick={() => handleApprove(testSession) }>
+                          <ApprovalIcon fontSize='small'/>
+                      </IconButton>
+                    </Tooltip>
                   </TableCell>
+                  <TableCell key={columns[4].id} align={columns[4].align} width={columns[5].minWidth}>
+                  <Tooltip title="Відклонити реєстрацію">
+                    <IconButton onClick={() => handleCancel(testSession) }>
+                        <BackspaceOutlinedIcon fontSize='small'/>
+                    </IconButton>
+                  </Tooltip>
+                </TableCell></>
                   : null}
               </TableRow>
             ))}

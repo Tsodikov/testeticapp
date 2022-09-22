@@ -57,9 +57,7 @@ export const questionsSlice = createSlice({
             questionsAdapter.addOne(state, action.payload);
         },
         allQuestionsRemove: (state, action) => {
-            // console.log(current(state))
             questionsAdapter.removeAll(state);
-            // console.log(current(state))
         },
         questionSetOne: (state, action) => {
             questionsAdapter.setOne(state, action.payload);

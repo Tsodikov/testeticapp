@@ -157,7 +157,6 @@ export const selectorQtnTests = createSelector(
     selectAll,
     (chapters, id) => {
         const chapter = Object.values(chapters).filter(item => item.id === id);
-        console.log(chapter[0].qtnTests)
         return chapter[0].qtnTests;
     }
 )

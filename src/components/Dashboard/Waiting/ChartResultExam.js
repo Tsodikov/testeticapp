@@ -39,7 +39,6 @@ export const ChartResultExam = () => {
     }
 
     const data = createData();
-    console.log(data);
 
     const renderTooltip = ({ active, payload, label }) => {
         if (active && payload && payload.length) {

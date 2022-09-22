@@ -21,7 +21,6 @@ export default function FinalDialog({ test, openFinalDialog, setConfirm, setOpen
 
     const handleConfirm = () => {
         setOpenFinalDialog(false);
-        console.log(test)
         const newTestSession = {
             testId: test.id,          
             userId: currentUser.id,          
@@ -33,7 +32,6 @@ export default function FinalDialog({ test, openFinalDialog, setConfirm, setOpen
             endTest: new Date('1970-01-01'),
             status: 'registering',
         }
-        console.log(newTestSession)
         dispatch(createTestSession(newTestSession));
         setConfirm(true);
         dispatch(clearCurrentTestSession());

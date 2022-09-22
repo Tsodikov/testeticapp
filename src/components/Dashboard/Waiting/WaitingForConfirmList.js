@@ -56,7 +56,7 @@ export const WaitingForConfirmList = ({ setShowTestCard, setShowConfirmList, set
         e.preventDefault();
         setSelectedTestSession(testSession.id);
         dispatch(setCurrentTestSession(testSession));
-        // setShowTestCard(true);
+        setShowTestCard(true);
         // dispatch(clearCurrentTestSession());
     }
 
@@ -195,11 +195,10 @@ export const WaitingForConfirmList = ({ setShowTestCard, setShowConfirmList, set
                             {setLastChange(item)}
                         </TableCell>
                         {!readyToExam(item) ? null : 
-                        <TableCell >
-                            
+                        <TableCell >                         
                             <Tooltip title="Go to exam">
                                 <IconButton onClick={(e) => goToExam(e, item) }>
-                                    <DirectionsRunIcon fontSize='small'/>
+                                    <DirectionsRunIcon fontSize='small' sx={{color: "green"}}/>
                                 </IconButton>
                             </Tooltip>
                         </TableCell>}

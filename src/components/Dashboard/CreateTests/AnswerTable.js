@@ -79,10 +79,6 @@ const onEditAnswer = (e, answer) => {
     switchMode('modeAddAnswer');
     setShowQuestionTable(true);
     setShowAnswerTable(true);
-    // setShowAddAnswer(true);
-    // setShowMediaFiles(false);
-    // setShowAddQuestion(false);
-    // console.log(editMode)
 }
 
 useEffect(() => {

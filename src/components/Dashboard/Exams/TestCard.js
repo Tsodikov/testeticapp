@@ -48,7 +48,6 @@ export const TestCard = ({mode, setShowExam, setShowTestCard, setShowConfirmList
     }
 
     const buttonName = () => {
-        // console.log(currentTestSession)
         if (currentTestSession) {
             switch (currentTestSession.status) {
                 case 'registering':

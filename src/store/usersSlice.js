@@ -109,7 +109,6 @@ export const usersSlice = createSlice({
         })
         .addCase(login.fulfilled, (state, action) => {
             state.usersLoadingStatus = 'loaded';
-            // console.log(action.payload.userData.Organization)
             state.currentUser = {
                 id: action.payload.userData.id,
                 name: action.payload.userData.name,
@@ -142,7 +141,6 @@ export const usersSlice = createSlice({
         })
         .addCase(addUserToOrg.fulfilled, (state, action) => {
             state.usersLoadingStatus = 'loaded';
-            console.log(action.payload)
             userAdapter.addOne(state, action.payload);
             // state.currentUser = {
             //     id: action.payload.id,

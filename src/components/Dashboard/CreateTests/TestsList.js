@@ -8,37 +8,38 @@ import Title from '../Title';
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Grid, IconButton, Paper, TableContainer, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
-import { clearEditingTest, deleteTest, fetchTestsByDep, fetchTestsByOrg, setActiveTest, setEditingTest, testsSelector } from '../../../store/testsSlice';
+import { Button, FormControlLabel, Grid, IconButton, Paper, Switch, TableContainer, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import { clearActiveTest, clearEditingTest, deleteTest, fetchTestsByDep, fetchTestsByOrg, setActiveTest, setEditingTest, testsSelector } from '../../../store/testsSlice';
 import { setTempMediaFileArray } from '../../../store/mediaFilesSlice';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import { updateChapter } from '../../../store/chapterSlice';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import { getByTestId } from '../../../store/testSessionSlice';
 
 const columns = [
     { id: 'test', 
       label: 'Test', 
-      minWidth: 160,
+      minWidth: 220,
       format: (value) => value.toLocaleString('en-US'),
     },
     { id: 'department', 
       label: 'Department', 
-      minWidth: 80,
+      minWidth: 140,
       format: (value) => value.toLocaleString('en-US'),
     },
     { id: 'section', 
       label: 'Section', 
-      minWidth: 80,
+      minWidth: 60,
       format: (value) => value.toLocaleString('en-US'),
     },
     { id: 'passed', 
       label: "Passed", 
-      minWidth: 20,
+      minWidth: 12,
       format: (value) => value.toLocaleString('en-US'),
     },
     { id: 'qtnquestion', 
       label: "Questions", 
-      minWidth: 20,
+      minWidth: 12,
       format: (value) => value.toLocaleString('en-US'),
     },
     { id: 'created', 
@@ -48,24 +49,24 @@ const columns = [
     },
     { id: 'creator', 
       label: "Creator", 
-      minWidth: 20,
+      minWidth: 12,
       format: (value) => value.toLocaleString('en-US'),
     },
     { id: 'edit', 
       label: "", 
-      minWidth: 12,
+      minWidth: 8,
       width:12,
       format: (value) => value.toLocaleString('en-US'),
     },
     { id: 'editcontent', 
       label: "", 
-      minWidth: 12,
+      minWidth: 8,
       width:12,
       format: (value) => value.toLocaleString('en-US'),
     },
     { id: 'del', 
       label: "", 
-      minWidth: 12,
+      minWidth: 8,
       width:12,
       format: (value) => value.toLocaleString('en-US'),
     },
@@ -75,18 +76,21 @@ export default function TestsList({
     switchMode,
     selectedTest, setSelectedTest, 
     editMode, setEditMode, 
+    setShowAddTest
 }) {
     const [mode, setMode] = React.useState('mytests');
     const currentUser = useSelector(state => state.users.currentUser);
     const testsList = useSelector(testsSelector);
     const dispatch = useDispatch();
+    const [readyToUse, setReadyToUse] = React.useState(true);
 
     const showList = (mode) => {
+        const filteredTestList = readyToUse? testsList.filter(item => item.readyToUse) : testsList.filter(item => !item.readyToUse);
         switch (mode) {
             case 'mytests':
-                return testsList.filter(item => item.testCreator.id === currentUser.id);
+                return filteredTestList.filter(item => item.testCreator.id === currentUser.id);
             case 'mydeparttests':
-                return testsList.filter(item => item.department.departmentId === currentUser.departmentId);
+                return filteredTestList.filter(item => item.department.departmentId === currentUser.departmentId);
             case 'alltests':
                 return testsList.filter(item => item);
         
@@ -103,21 +107,27 @@ export default function TestsList({
 
     const onEdit =(event, test) => {
         event.preventDefault();
+        // setShowAddTest(false);
+        dispatch(clearEditingTest());
         dispatch(setEditingTest(test));
         dispatch(setTempMediaFileArray(test.testMediaFiles));
         setEditMode(true);
+        // setShowAddTest(true);
         switchMode('modeAddTest');
     }
 
     const onEditContent = (e, test) => {
         e.preventDefault();
         dispatch(setActiveTest(test));
+        // dispatch(setEditingTest(test));
         setEditMode(false);
         switchMode('modeQuestionTable');
     }
 
     const onStatDisplay = (e, test) => {
         e.preventDefault();
+        dispatch(getByTestId(test.id));
+        // dispatch(clearActiveTest());
         dispatch(setActiveTest(test));
         switchMode('modeTestStatistic');
     }
@@ -145,23 +155,31 @@ export default function TestsList({
         elevation={6}
         >
         <Grid container spacing={3}>
-            <Grid item xs={12} sm={10} lg={10}>
+            <Grid item xs={12} sm={2} lg={2}>
                 <Title>Tests list</Title>
             </Grid>
-            <Grid item xs={12} sm={4} lg={4}>
+            <Grid item xs={12} sm={2} lg={2}>
+                <FormControlLabel 
+                    style={{marginTop: "6px"}} 
+                    label="Ready to use"
+                    control={<Switch 
+                        size="small" 
+                        checked={readyToUse}
+                        onChange={e => setReadyToUse(e.target.checked)}/>}
+                />
+            </Grid>
+            <Grid item xs={12} sm={6} lg={6}>
                 <ToggleButtonGroup
                     value={mode}
                     onChange={(e) => setMode(e.target.value)}
                     exclusive
-                    // fullWidth
-                    aria-label="change mode"
-                >
+                    aria-label="change mode">
                     <ToggleButton value="mytests" size="small" color="info" sx={{border: "none"}} aria-label="mytests">My tests</ToggleButton>
                     <ToggleButton value="mydeparttests" size="small" color="info" sx={{border: "none"}} aria-label="mydeparttests">My department tests</ToggleButton>
                     <ToggleButton value="alltests" size="small" color="info" sx={{border: "none"}} aria-label="alltests">All</ToggleButton>
-                    {/* <ToggleButton value="Exam finished" size="small" color="info" sx={{border: "none"}} aria-label="registered">Passed</ToggleButton>  */}
                 </ToggleButtonGroup>
             </Grid>
+            
             <Grid item xs={2} sm={2} lg={2}>
                 <Button
                     type="button"
@@ -187,7 +205,6 @@ export default function TestsList({
                 </TableRow>
             </TableHead>
             <TableBody>
-                {console.log(showList(mode))}
                 {!showList(mode)? null :
                 showList(mode)
                 .map((test) => (
@@ -240,24 +257,24 @@ export default function TestsList({
                             align={columns[6].align}>
                             {test.testCreator.creatorName}
                         </TableCell>
-                        <TableCell >
-                            {!test.readyToUse? null :
-                            <IconButton onClick={(e) => onStatDisplay(e, test) }>
+                        <TableCell sx={{paddingRight: 0, paddingLeft: 0}}>
+                            {test.qtnUsers === 0? null :
+                            <IconButton onClick={(e) => onStatDisplay(e, test) } >
                                 <QueryStatsIcon fontSize='small'/>
                             </IconButton>}
                         </TableCell>
-                        <TableCell >
-                            <IconButton onClick={(e) => onEdit(e, test) }>
+                        <TableCell sx={{paddingRight: 0, paddingLeft: 0}}>
+                            <IconButton onClick={(e) => onEdit(e, test) } >
                                 <BorderColorOutlinedIcon fontSize='small'/>
                             </IconButton>
                         </TableCell>
-                        <TableCell >
-                            <IconButton onClick={(e) => onEditContent(e, test) }>
+                        <TableCell sx={{paddingRight: 0, paddingLeft: 0}}>
+                            <IconButton onClick={(e) => onEditContent(e, test) } >
                                 <ListAltIcon fontSize='small'/>
                             </IconButton>
                         </TableCell>
-                        <TableCell >
-                            <IconButton onClick={(e) => onDeleteTest(test) }>
+                        <TableCell sx={{paddingRight: 0, paddingLeft: 0}}>
+                            <IconButton onClick={(e) => onDeleteTest(test) } >
                                 <DeleteOutlinedIcon fontSize='small'/>
                             </IconButton>
                         </TableCell>

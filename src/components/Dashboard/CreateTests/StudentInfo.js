@@ -51,7 +51,7 @@ export const StudentInfo = ({selectedUser, setShowStudentInfo }) => {
         sx={{ p: 2,
             display: 'flex',
             flexDirection: 'column',
-            height: 520, }}
+            height: currentTestSession.status !== 'Exam finished'? 240 : 520, }}
         elevation={6}>
             <Grid container spacing={3}>
                 <Grid item xs={2} sm={1} lg={1}>
@@ -74,7 +74,8 @@ export const StudentInfo = ({selectedUser, setShowStudentInfo }) => {
                     
                 {/* </Grid> */}
             </Grid>
-            <ChartResultExam />
+            {currentTestSession.status !== 'Exam finished'? null :
+            <ChartResultExam />}
             
         </Paper>
     )
