@@ -3,6 +3,8 @@ import React from 'react'
 import { Document, Page, pdfjs } from 'react-pdf';
 import { useState } from "react";
 import ReactPlayer from "react-player";
+// import { useSelector } from "react-redux";
+// import { Box, CircularProgress } from "@mui/material";
 
 export const ShowMediaFile = ({mode, file, url, setFiles}) => {
 
@@ -73,6 +75,7 @@ export const FileTypeSelector = ({ url, type }) => {
     `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
+    // const fileServerLoadingStatus = useSelector(state  => state.mediafiles.fileServerLoadingStatus);
 
     const onDocumentLoadSuccess = ( {numPages} ) => {
         setNumPages(numPages);
@@ -92,6 +95,13 @@ export const FileTypeSelector = ({ url, type }) => {
     }
 
     if (!url) return null;
+
+    // if (fileServerLoadingStatus !== 'loaded') 
+    // return (
+    //     <Box sx={{width: "100%", margin: "auto" }}>
+    //         <CircularProgress />
+    //     </Box>
+    // );
 
     switch (type) {
         case 'image/jpeg':

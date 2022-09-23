@@ -1,6 +1,7 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Checkbox, FormControl, FormControlLabel, Grid, IconButton, InputLabel, MenuItem, Paper, Select, TextField, Typography } from "@mui/material"
+import { Button, Checkbox, FormControl, FormControlLabel, Grid, IconButton, InputLabel, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
 import { addQuestions, clearEditingQuestion, setEditingQuestion, updateQuestion } from "../../../store/questionsSlice";
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import { addMediaToFileServer, clearTempMediaFileArray, delMediaFromFileServer } from "../../../store/mediaFilesSlice";
@@ -13,6 +14,8 @@ export const AddQuestion = ({ editMode, setEditMode, switchMode, setShowAddQuest
     const activeQuestion = useSelector(state => state.questions.activeQuestion);
     const editingQuestion = useSelector(state => state.questions.editingQuestion);
     const tempMediaFilesArray = useSelector(state => state.mediafiles.tempMediaFilesArray);
+    const fileServerLoadingStatus = useSelector(state  => state.mediafiles.fileServerLoadingStatus);
+    const [loading, setLoading] = React.useState(true);
 
     const dispatch = useDispatch();
 
@@ -47,7 +50,14 @@ export const AddQuestion = ({ editMode, setEditMode, switchMode, setShowAddQuest
     }
 
     const onAddMediaFile = (e) => {
+        setLoading(true);
         dispatch(addMediaToFileServer(e.target.files[0]));
+        //     if (fileServerLoadingStatus !== 'loaded') 
+        // return (
+        //     <Box sx={{width: "100%", margin: "auto" }}>
+        //         <CircularProgress />
+        //     </Box>
+        // );
     };
 
     const onCancelEditing = () => {
@@ -60,6 +70,13 @@ export const AddQuestion = ({ editMode, setEditMode, switchMode, setShowAddQuest
         // switchMode('modeAddQuestion');
         setShowAddQuestion(false);
     }
+
+    useEffect(() => {
+        if (fileServerLoadingStatus === 'loaded') setLoading(false);
+        // } else {
+        //     setLoading(false);
+        // }
+    }, [fileServerLoadingStatus])
 
     return (
         <React.Fragment>
@@ -108,16 +125,18 @@ export const AddQuestion = ({ editMode, setEditMode, switchMode, setShowAddQuest
                     />
                 </Grid>
                 <Grid item xs={1} sm={2} lg={2}>
-                    <Button
+                    <LoadingButton
                         size="medium"
                         sx={{marginTop: "20px"}}
                         component="label"
+                        loading={loading}
+                        loadingPosition="end"
                         fullWidth
                         onChange={(e) => onAddMediaFile(e)}
                         >
                         Add media file
                         <input hidden accept="image/*" multiple type="file" />
-                    </Button>
+                    </LoadingButton>
                 </Grid>
                 <Grid item xs={12} sm={5} lg={5}></Grid>
                 <Grid item xs={4} sm={1} lg={1}>
