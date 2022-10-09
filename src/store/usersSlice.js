@@ -139,7 +139,7 @@ export const usersSlice = createSlice({
         })
         .addCase(register.rejected, (state, action) => {
             state.usersLoadingStatus = 'error';
-            state.registerStatus = action.payload;
+            state.registerStatus = action.error;
         })
         .addCase(addUserToOrg.pending, (state) => {
             state.usersLoadingStatus = 'loading';

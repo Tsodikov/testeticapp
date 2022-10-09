@@ -17,6 +17,7 @@ import { login } from '../../store/usersSlice';
 import { useNavigate } from 'react-router-dom';
 import { setCurrentOrganization } from '../../store/organizationSlice';
 import { useEffect } from 'react';
+import { useMessages } from '../../hooks/messages.hook';
 
 function Copyright(props) {
   return (
@@ -38,7 +39,10 @@ export function SignIn() {
   const currentUser = useSelector(state => state.users.currentUser);
   const usersLoadingStatus = useSelector(state => state.users.usersLoadingStatus);
   const navigate = useNavigate();
+  const { ErrorMessage, WaitingLoading } = useMessages();
   const [success, setSuccess] = React.useState(false);
+  const [showMessage, setShowMessage] = React.useState(false);
+  const [backDrop, setBackDrop] = React.useState(false);
   // const location = useLocation();
 
   const handleSubmit = (event) => {
@@ -77,8 +81,13 @@ export function SignIn() {
         default:
       }
     }
-  // dispatch(fetchUsersToOrg(1));
-
+    if (usersLoadingStatus === 'error') {
+      setBackDrop(false);
+      setShowMessage(true);
+    }
+    if (usersLoadingStatus === 'loading') {
+      setBackDrop(true);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usersLoadingStatus, success]);
 
@@ -102,6 +111,11 @@ export function SignIn() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
+          <ErrorMessage 
+            open={showMessage} 
+            setShowMessage={setShowMessage}
+            message="Користувач з таким емейл не зарєєстрован в сістемі"/>
+          <WaitingLoading backDrop={backDrop} setBackDrop={setBackDrop}/>
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>

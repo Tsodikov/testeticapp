@@ -7,10 +7,10 @@ import TableRow from '@mui/material/TableRow';
 import Title from '../Title';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsersToOrg, setEditingUser, usersSelector } from '../../../store/usersSlice';
-import { Button, Grid, IconButton, Paper, TableContainer, TablePagination } from '@mui/material';
+import { Button, Grid, IconButton, Paper, TableContainer } from '@mui/material';
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import { departmentByIdSelector, departmentSelector, fetchDepartment } from '../../../store/departmentsSlice';
+import { departmentSelector, fetchDepartment } from '../../../store/departmentsSlice';
 
 const columns = [
   { id: 'name', 
@@ -57,9 +57,6 @@ const columns = [
 ];
 
 export default function UsersTable({ selectedIndex, setSelectedIndex, showAddUser, setShowAddUser, setEditMode, display }) {
-
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(6);  
 
   const usersList = useSelector(usersSelector);
   const currentOrganization = useSelector(state => state.organization.currentOrganization);

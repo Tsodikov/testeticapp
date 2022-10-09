@@ -15,7 +15,7 @@ export const AddQuestion = ({ editMode, setEditMode, switchMode, setShowAddQuest
     const editingQuestion = useSelector(state => state.questions.editingQuestion);
     const tempMediaFilesArray = useSelector(state => state.mediafiles.tempMediaFilesArray);
     const fileServerLoadingStatus = useSelector(state  => state.mediafiles.fileServerLoadingStatus);
-    const [loading, setLoading] = React.useState(true);
+    const [loading, setLoading] = React.useState(false);
 
     const dispatch = useDispatch();
 

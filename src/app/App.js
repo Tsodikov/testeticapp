@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { MainAdminPage } from '../Pages/MainAdminPage.js';
+// import { MainAdminPage } from '../Pages/MainAdminPage.js';
 import { OrganizationPage } from '../Pages/OrganizationRegisterPage.js';
 import { Helmet } from 'react-helmet';
 import { Landing } from '../components/Landing/screens/Landing.jsx';
 import { SignUpPage } from '../Pages/SignUpPage.js';
-import { AddUsersPage } from '../Pages/AddUsersPage.js';
+// import { AddUsersPage } from '../Pages/AddUsersPage.js';
 import { AdminPage } from '../Pages/AdminPage.js';
 import { CreatorDachboardPage } from '../Pages/CreatorDachboardPage.js';
 import { TestPage } from '../Pages/TestPage.js';
@@ -45,9 +45,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<SignInPage />} />
-        <Route path="/managetests" element={<MainAdminPage />} />
+        {/* <Route path="/managetests" element={<MainAdminPage />} /> */}
         <Route path="/orgregistration" element={<OrganizationPage />} />
-        <Route path="/addusers" element={<AddUsersPage />} />
+        {/* <Route path="/addusers" element={<AddUsersPage />} /> */}
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/tests" >
           <Route path=":testId" element={<TestPage />} />

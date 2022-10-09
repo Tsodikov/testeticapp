@@ -1,4 +1,4 @@
-import { Typography, Grid, TextField, Button, Autocomplete, Paper } from "@mui/material"
+import { Grid, TextField, Button, Autocomplete, Paper } from "@mui/material"
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchDepartment, listDepartmentForListing } from "../../../store/departmentsSlice";

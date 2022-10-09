@@ -2,7 +2,6 @@ import { Grid } from '@mui/material';
 import { Container } from '@mui/system';
 import { useState, Fragment } from 'react';
 import { TestCard } from './TestCard';
-import { ExamsFilter } from './ExamsFilter';
 import { ExamsList } from './ExamsList';
 
 export const ExamsWrraper = ({display}) => {

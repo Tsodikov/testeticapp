@@ -1,17 +1,13 @@
 import React from "react";
-import styled from "styled-components";
-import { useNavigate } from 'react-router-dom';
-// Components
+import styled from "styled-components";// Components
 import FullButton from "../Buttons/FullButton";
 // Assets
 import HeaderImage from "../../assets/img/image1-9-1024x683.jpg";
 import QuotesIcon from "../../assets/svg/Quotes";
 import Dots from "../../assets/svg/Dots";
-import { OrganizationRegisterForm } from "../../../OrganizationRegisterForm/OrganizationForm";
+import RegistrationStepper from "../../../OrganizationRegisterForm/RegistrationStepper";
 
 export default function Header({showHeader, setShowHeader}) {
-
-  const navigate = useNavigate();
 
   return (
     <Wrapper id="home" className="container flexSpaceCenter">
@@ -49,7 +45,7 @@ export default function Header({showHeader, setShowHeader}) {
         <GreyDiv className="lightBg"></GreyDiv>
       </RightSide>
       </> 
-      : <OrganizationRegisterForm setShowHeader={setShowHeader}/>} 
+      : <RegistrationStepper setShowHeader={setShowHeader}/>} 
     </Wrapper>
   );
 }

@@ -18,6 +18,7 @@ export default function TopNavbar({showHeader}) {
   const location = useLocation();
   const currentUser = useSelector(state => state.users.currentUser);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [action, setAction] = React.useState('');
   const openMenu = Boolean(anchorEl);
   // const dispatch = useDispatch();
